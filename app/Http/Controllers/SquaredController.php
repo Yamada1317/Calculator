@@ -11,6 +11,13 @@ class SquaredController extends Controller
         $basicNum = $request->input('number');
         $squaredNum = $basicNum * $basicNum;
         
+        $link = mysqli_connect('localhost', 'root', '', 'network');   
+        $stmt = mysqli_prepare($link, "INSERT INTO results (result) VALUES (?)");   
+        mysqli_stmt_bind_param($stmt, "d", $squaredNum);
+        $result = mysqli_stmt_execute($stmt);
+
+        mysqli_close($link);
+
         return $squaredNum;
     }
 }
